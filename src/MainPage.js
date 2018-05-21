@@ -12,9 +12,9 @@ class MainPage extends Component {
     render() {
 
         const { books, onBookUpdate } = this.props
-        let currentReadShelf = books.filter(a => a.shelf==="currentlyReading")
-        let wantToReadShelf = books.filter(b => b.shelf==="wantToRead")
-        let readShelf = books.filter(c => c.shelf==="read")
+        const currentReadShelf = books.filter(a => a.shelf==="currentlyReading")
+        const wantToReadShelf = books.filter(b => b.shelf==="wantToRead")
+        const readShelf = books.filter(c => c.shelf==="read")
 
         return (
             <div className="list-books">
@@ -35,7 +35,7 @@ class MainPage extends Component {
                                         <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                                         <div className="book-shelf-changer">
                                         <select onChange={(e) => onBookUpdate(book, e.target.value)} value = {book.shelf} >
-                                            <option value="none" disabled>Move to...</option>
+                                            <option value="move" disabled>Move to...</option>
                                             <option value="currentlyReading">Currently Reading</option>
                                             <option value="wantToRead">Want to Read</option>
                                             <option value="read" >Read</option>
@@ -64,7 +64,7 @@ class MainPage extends Component {
                                         <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                                         <div className="book-shelf-changer">
                                         <select onChange={(e) => onBookUpdate(book, e.target.value)} value = {book.shelf} >
-                                            <option value="none" disabled>Move to...</option>
+                                            <option value="move" disabled>Move to...</option>
                                             <option value="currentlyReading">Currently Reading</option>
                                             <option value="wantToRead">Want to Read</option>
                                             <option value="read" >Read</option>
@@ -93,7 +93,7 @@ class MainPage extends Component {
                                         <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                                         <div className="book-shelf-changer">
                                         <select onChange={(e) => onBookUpdate(book, e.target.value)} value = {book.shelf} >
-                                            <option value="none" disabled>Move to...</option>
+                                            <option value="move" disabled>Move to...</option>
                                             <option value="currentlyReading">Currently Reading</option>
                                             <option value="wantToRead">Want to Read</option>
                                             <option value="read" >Read</option>
