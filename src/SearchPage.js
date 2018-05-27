@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
+import noThumbnail from './icons/image_not_found.jpg'
 
 class SearchPage extends Component {
 
@@ -14,6 +15,11 @@ class SearchPage extends Component {
         query: '',
         searchedBooks: [],
         searchError: false
+    }
+    
+    findBookInMySelf = (book) => {
+        const foundBook = this.props.books.find(b => b.id === book.id);
+        return foundBook ? foundBook.shelf : 'none'
     }
     
     searchBooks = (query) => {
@@ -33,7 +39,7 @@ class SearchPage extends Component {
 
     render() {
         const { query, searchedBooks, searchError } = this.state
-        const { onBookUpdate } = this.props 
+        const { books, onBookUpdate } = this.props 
 
         return (
             <div className="search-books">
@@ -51,16 +57,15 @@ class SearchPage extends Component {
                         onChange={(event) => this.searchBooks(event.target.value)}
                     />
                     <div className="bookshelf-books">
-
                     <ol className="books-grid">
                         {
-                            searchedBooks.map((book) => (
+                            searchedBooks.map((book) => (    
                                 <li key={book.id}>
                                     <div className="book">
                                     <div className="book-top">
-                                        <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+                                        <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url(${book.imageLinks && book.imageLinks.thumbnail ? book.imageLinks.thumbnail : noThumbnail})` }}></div>
                                         <div className="book-shelf-changer">
-                                        <select onChange={(e) => onBookUpdate(book, e.target.value.trim())} value = {book.shelf} >
+                                        <select onChange={(e) => onBookUpdate(book, e.target.value.trim())} value = {this.findBookInMySelf(book)} >
                                             <option value="move" disabled>Move to...</option>
                                             <option value="currentlyReading">Currently Reading</option>
                                             <option value="wantToRead">Want to Read</option>
@@ -76,13 +81,13 @@ class SearchPage extends Component {
                             ))                   
                         }
                         {
-                        searchError && (
-                            <div>
+                            searchError && (
                                 <div>
+                                    <div>
                                         <h4>Your search returned 0 books. Please try search for a different book!</h4>
                                     </div>
                                 </div>
-                        )
+                            )
                         }
                     </ol>
                     </div>
